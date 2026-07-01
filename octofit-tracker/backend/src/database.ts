@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const mongoUri = 'mongodb://127.0.0.1:27017/octofit_db';
+export const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 
 export const database = mongoose;
 
@@ -12,3 +12,5 @@ export async function connectToDatabase() {
   await database.connect(mongoUri);
   return database.connection;
 }
+
+export default database;
