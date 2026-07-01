@@ -5,9 +5,11 @@ const router = express.Router();
 
 function getBaseUrl(req: express.Request) {
   const codespaceName = process.env.CODESPACE_NAME;
-  return codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : `${req.protocol}://${req.get('host')}`;
+  if (codespaceName) {
+    return `https://${codespaceName}-8000.app.github.dev`;
+  }
+
+  return `http://localhost:${process.env.PORT || 8000}`;
 }
 
 router.get('/api/users', async (_req, res) => {

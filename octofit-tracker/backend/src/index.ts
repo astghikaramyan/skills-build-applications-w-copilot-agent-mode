@@ -3,7 +3,7 @@ import routes from './routes';
 import { connectToDatabase } from './config/database';
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = Number(process.env.PORT || 8000);
 
 app.use(express.json());
 app.use(routes);
