@@ -4,6 +4,7 @@ import { connectToDatabase } from './config/database';
 
 const app = express();
 const port = Number(process.env.PORT || 8000);
+const host = process.env.HOST || '0.0.0.0';
 
 app.use(express.json());
 app.use(routes);
@@ -17,8 +18,8 @@ async function start() {
     await connectToDatabase();
     console.log('Connected to MongoDB');
 
-    app.listen(port, () => {
-      console.log(`API server listening on port ${port}`);
+    app.listen(port, host, () => {
+      console.log(`API server listening on ${host}:${port}`);
     });
   } catch (error) {
     console.error('Failed to start server', error);

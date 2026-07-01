@@ -4,6 +4,7 @@ import { connectToDatabase } from './config/database';
 
 const app = express();
 const port = Number(process.env.PORT || 8000);
+const host = process.env.HOST || '0.0.0.0';
 const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
@@ -20,8 +21,8 @@ async function start() {
   try {
     await connectToDatabase();
     console.log('Connected to MongoDB');
-    app.listen(port, () => {
-      console.log(`API server listening on port ${port}`);
+    app.listen(port, host, () => {
+      console.log(`API server listening on ${host}:${port}`);
       console.log(`Base URL: ${baseUrl}`);
     });
   } catch (error) {
