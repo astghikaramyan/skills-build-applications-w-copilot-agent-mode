@@ -1,17 +1,16 @@
 import mongoose from 'mongoose';
 
-export const databaseName = 'octofit_db';
-export const mongoUri = process.env.MONGO_URI || `mongodb://127.0.0.1:27017/${databaseName}`;
-export const mongooseConnection = mongoose;
+export const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/octofit_db';
+export const database = mongoose;
 
 export async function connectToDatabase() {
-  if (mongooseConnection.connection.readyState >= 1) {
-    return mongooseConnection.connection;
+  if (database.connection.readyState >= 1) {
+    return database.connection;
   }
 
-  await mongooseConnection.connect(mongoUri);
-  return mongooseConnection.connection;
+  await database.connect(mongoUri);
+  return database.connection;
 }
 
-export { mongooseConnection as mongoose };
-export default mongooseConnection;
+export { database as mongoose };
+export default database;
