@@ -9,7 +9,10 @@ function Teams() {
   useEffect(() => {
     async function loadTeams() {
       try {
-        const response = await fetch(`${getApiBaseUrl()}/api/teams`);
+        const apiUrl = import.meta.env.VITE_CODESPACE_NAME
+          ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams`
+          : 'http://localhost:8000/api/teams';
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error('Failed to load teams');
         }
