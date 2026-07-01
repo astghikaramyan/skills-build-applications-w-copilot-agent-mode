@@ -8,10 +8,14 @@ const routes_1 = __importDefault(require("./routes"));
 const database_1 = require("./config/database");
 const app = (0, express_1.default)();
 const port = Number(process.env.PORT || 8000);
+const codespaceName = process.env.CODESPACE_NAME;
+const baseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : `http://localhost:${port}`;
 app.use(express_1.default.json());
 app.use(routes_1.default);
 app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok' });
+    res.json({ status: 'ok', baseUrl });
 });
 async function start() {
     try {
@@ -19,6 +23,7 @@ async function start() {
         console.log('Connected to MongoDB');
         app.listen(port, () => {
             console.log(`API server listening on port ${port}`);
+            console.log(`Base URL: ${baseUrl}`);
         });
     }
     catch (error) {

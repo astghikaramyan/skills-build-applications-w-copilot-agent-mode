@@ -8,9 +8,10 @@ const models_1 = require("./models");
 const router = express_1.default.Router();
 function getBaseUrl(req) {
     const codespaceName = process.env.CODESPACE_NAME;
-    return codespaceName
-        ? `https://${codespaceName}-8000.app.github.dev`
-        : `${req.protocol}://${req.get('host')}`;
+    if (codespaceName) {
+        return `https://${codespaceName}-8000.app.github.dev`;
+    }
+    return `http://localhost:${process.env.PORT || 8000}`;
 }
 router.get('/api/users', async (_req, res) => {
     const users = await models_1.User.find({}).lean();
